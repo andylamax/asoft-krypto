@@ -1,2 +1,2 @@
 # asoft-krypto
-A Kotlin Multiplatform LIb for cryptography
+A Kotlin Multiplatform Lib for cryptography
