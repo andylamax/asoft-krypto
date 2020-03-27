@@ -1,67 +1,23 @@
 plugins {
-    kotlin("multiplatform") version ("1.3.70")
-    id("com.android.library") version ("3.6.0")
+    kotlin("multiplatform")
+    id("com.android.library")
     id("maven-publish")
 }
 
-object versions {
-    val asoft_test = "4.2.0"
-}
-
-fun andylamax(lib: String, platform: String, ver: String): String {
-    return "com.github.andylamax.$lib:$lib-$platform:$ver"
-}
-
-fun asoftTest(platform: String) = andylamax("asoft-test", platform, versions.asoft_test)
-
-group = "tz.co.asoft"
-version = "1.0.0"
-
-repositories {
-    google()
-    jcenter()
-    maven(url = "https://jitpack.io")
-}
-
-android {
-    compileSdkVersion(28)
-    defaultConfig {
-        minSdkVersion(1)
-        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
-    }
-
-    sourceSets {
-        val main by getting {
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-            resources.srcDirs("src/androidMain/resources")
-        }
-    }
-
-    lintOptions {
-
-    }
-
-    buildTypes {
-        val release by getting {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-}
+android { configureAndroid() }
 
 kotlin {
     android {
-        compilations.all { kotlinOptions { jvmTarget = "1.8" } }
+        compilations.all {
+            kotlinOptions { jvmTarget = "1.8" }
+        }
         publishLibraryVariants("release")
     }
 
     jvm {
-        compilations.all { kotlinOptions { jvmTarget = "1.8" } }
+        compilations.all {
+            kotlinOptions { jvmTarget = "1.8" }
+        }
     }
 
     js {
@@ -110,13 +66,11 @@ kotlin {
                 implementation(asoftTest("jvm"))
             }
         }
-
         val jsMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-js"))
             }
         }
-
         val jsTest by getting {
             dependencies {
                 implementation(asoftTest("js"))
